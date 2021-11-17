@@ -1,22 +1,28 @@
-import { IconButton, Table, TableContainer, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core";
+import {Typography, IconButton, Table, TableContainer, TableBody, TableHead, TableRow, TableCell } from "@material-ui/core";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Edit, Delete } from "@material-ui/icons";
+import Create from "./Create";
+import UpdateCategory from "./UpdateCategory";
+import DeleteCategory from "./DeleteCategory";
 
 
 const Category = () => {
 
     const categories = useSelector(state => state.categoryReducer)
+    const dispatch = useDispatch();
 
     useEffect(() => {
 
     }, [categories])
 
+
+
     return (
-        <div className="container">
+        <div className="container mt-4">
 
-            Liste de tous les category
-
+            <Typography variant="h5" > Liste de tous les category</Typography>
+            <Create />
             <TableContainer>
                 <Table>
                     <TableHead>
@@ -28,17 +34,17 @@ const Category = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {categories.category?.map(c => (
-                            <TableRow>
+                        {categories?.map(c => (
+                            <TableRow key={c._id}>
                                 <TableCell> {c._id} </TableCell>
                                 <TableCell> {c.libelleCateg} </TableCell>
                                 <TableCell> {c.descCateg} </TableCell>
                                 <TableCell>
                                     <IconButton>
-                                        <Edit color="primary" />
+                                        <UpdateCategory libelle={c.libelleCateg} desc={c.descCateg} id={c._id} />
                                     </IconButton>
                                     <IconButton>
-                                        <Delete color="secondary" />
+                                        <DeleteCategory id={c._id} />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
