@@ -34,7 +34,7 @@ const Category = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {categories?.map(c => (
+                        {categories.length !== undefined && categories?.map(c => (
                             <TableRow key={c._id}>
                                 <TableCell> {c._id} </TableCell>
                                 <TableCell> {c.libelleCateg} </TableCell>

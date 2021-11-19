@@ -13,6 +13,7 @@ import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import SwiperCore, {Navigation, Pagination, Scrollbar} from 'swiper'
 import RemovePanier from "./RemovePanier";
+import { getPanier } from "../../../actions/PanierAction";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +50,7 @@ const Panier = () => {
 
     useEffect(() => {
         calcul()
+        //dispatch(getPanier())
     }, [panier])
 
     return (

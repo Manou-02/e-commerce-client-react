@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-
 const PopPanier = ({id, open, anchorEl, onClose}) => {
 
     const classes = useStyles() 
@@ -27,7 +26,7 @@ const PopPanier = ({id, open, anchorEl, onClose}) => {
 
     useEffect(() => {
         calcul()
-        dispatch(getPanier())
+        //dispatch(getPanier())
         
     }, [panier])
 
@@ -64,7 +63,7 @@ const PopPanier = ({id, open, anchorEl, onClose}) => {
 
                     {/**Le contenue de mon panier */}
                     <List>
-                        {panier.length !== undefined && panier.map(p => (
+                        {panier.length !== null && panier.length !== undefined && panier.map(p => (
                             <>
                                 <ListItem>
                                     <Grid container spacing={2}>

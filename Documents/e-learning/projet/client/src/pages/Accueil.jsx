@@ -12,7 +12,7 @@ import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
 import SwiperCore, {Navigation, Pagination, Scrollbar} from 'swiper'
 import db from '../reducers/InitialeIDB'
-import { getPanier } from "../actions/PanierAction";
+import { addPanier, getPanier, updatePanier } from "../actions/PanierAction";
 import Fuse from 'fuse.js';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,11 +20,16 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = makeStyles({
     root : {
-        maxWidth : 200,
+        maxWidth : 300,
+        width : 250
     },
     media : {
         height : 200,
     },
+    header : {
+        width : "100%"
+    },
+   
 })
 
 SwiperCore.use([Navigation, Pagination, Scrollbar])
@@ -64,30 +69,67 @@ const Accueil = () => {
 
     const notify = () => toast("Ajouté au panier avec succès");
 
-     const handleAddPannier = (id) => {
+     const handleAddPannier = async (id) => {
         value = {
+            id : id,
             produit : produits.filter(prod => prod._id === id)[0],
             qte : 1
         }
-        
-        db.collection('ligneCom').get().then(ligne => {
-            for(let i = 0; i < ligne.length; i ++){
-                if(ligne[i].produit._id === id){
-                    return db.collection('ligneCom').doc(id).set({
-                        produit : ligne[i].produit,
-                        qte : ligne[i].qte + 1
-                    })
-                }
-            }
-            return db.collection('ligneCom').add(value, id);
+        let data;
+        await db.collection('ligneCom').get().then(res => {
+            data = res.filter(p => p.produit._id === id)
+        }).catch(err => {
+            console.log(err);
         })
 
+        if(Object.keys(data).length === 0){
+            dispatch(addPanier(value));
+        }else{
+            dispatch(updatePanier(value));
+        }
+        //console.log(Object.keys(data).length);
+
+        // if(!data){
+        //     //Modification
+        //     console.log("aaaa");
+        //     //await dispatch(addPanier(value))
+        // }else{
+        //     //addition
+        //     console.log('bbbbb');
+        //     // await dispatch(updatePanier(value))
+        // }
+
+        //await dispatch(addPanier(value)); 
+        // db.collection('ligneCom').get().then(ligne => {
+        //     for(let i = 0; i < ligne.length; i ++){
+        //         if(ligne[i].produit._id === id){
+        //             return db.collection('ligneCom').doc(id).set({
+        //                 produit : ligne[i].produit,
+        //                 qte : ligne[i].qte + 1
+        //             })
+        //         }
+        //     }
+        //     return db.collection('ligneCom').add(value, id);
+        // })
+        dispatch(getPanier());
         notify();
     }
     
     
     return (
-        <div className="container mt-4">
+        <>
+         <div className={classes.header} style={{ width : "100%", height :"350px", backgroundImage : "url('./2.jpg')", backgroundRepeat : "no-repeat", backgroundSize : "cover"}}>
+                {/* <img src="./2.jpg" alt="image"  style={{width : "100%", height :"350px"}}/> */}
+
+            <div className="mx-4 pt-4">
+                <h1 style={{color : "white", fontSize : "3rem", display :"none"}} className="">&nbsp;</h1>
+                <h1 style={{color : "white", fontSize : "3rem"}} className="">E-Varotra</h1>
+                <h3 style={{color : "white"}} className="">Vente des matériels informatiques</h3>
+            </div>
+         </div>
+
+        <div className="container">
+
             <div className="my-4">
                 <TextField 
                     id="recherche"
@@ -133,21 +175,11 @@ const Accueil = () => {
                                                 value={produit.rateProd}
                                             />
                                         </Box>
-                                        {/* <DetailPage  
-                                            idProd={produit.idProduct}
-                                            nomProd={produit.nameProduct}
-                                            descProd={produit.description}
-                                            prixProd={produit.price}
-                                            imgProd="https://www.futura-sciences.com/tech/comparatifs/wp-content/uploads/2019/10/Souris-sans-fil-avantages-300x300.jpg"
-                                            stockProd={produit.stock}
-                                            categProd={produit.category.name}
-                                            ratingProd={produit.rate}
-                                        /> */}
                                     </CardContent>
                                 </div>
                                 <CardActions>
                                     <Button variant='outlined' color="primary" onClick={() => handleAddPannier(produit._id)}><AddCircle /> &nbsp;&nbsp; Ajouter au panier</Button>
-                                    <ToastContainer />
+                                    <ToastContainer autoClose={2000} />
                                 </CardActions>
                                 </Card>
                             </Paper>
@@ -156,7 +188,10 @@ const Accueil = () => {
                     ))}
                 </Grid>          
         </div>
+        </>
     )
 }
+
+
 
 export default Accueil

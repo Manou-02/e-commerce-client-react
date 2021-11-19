@@ -3,7 +3,7 @@ import { Alert } from '@material-ui/lab'
 
 const CommandeEnvoyer = () => {
     return(
-        <div className="container m-4">
+        <div className="container my-4">
             <Grid container>
                 <Grid item xs={3}>
 
@@ -13,6 +13,7 @@ const CommandeEnvoyer = () => {
                         <Alert severity="info">
                             Votre commande est en cours.
                             <Typography>Nous vous avons envoyé une e-mail de confirmation, veuillez le consulter. </Typography>
+                            <img src="./success.png" alt="success" style={{width : "500px", height : "500px"}} />
                         </Alert>
                     </Paper>
                 </Grid>

@@ -9,11 +9,13 @@ import { getAllCategory } from './actions/CategoryAction';
 import { getAllProduit } from './actions/ProduitAction';
 import { getPanier } from './actions/PanierAction';
 import { getAllCommande } from './actions/CommandeActions';
+import {getAllUser} from './actions/UserAction';
 
 store.dispatch(getAllCategory());
 store.dispatch(getAllProduit());
 store.dispatch(getPanier());
 store.dispatch(getAllCommande());
+store.dispatch(getAllUser());
 
 
 ReactDOM.render(

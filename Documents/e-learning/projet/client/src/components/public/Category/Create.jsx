@@ -61,14 +61,16 @@ const Create = () => {
                 <DialogTitle>
                     <Typography variant="subtitle1">Ajouter une nouvelle categorie</Typography> 
                 </DialogTitle>
-                <DialogContent>
-                    <TextField name="libelleCateg" value={info.libelleCateg} onChange={onChangeHandler}  label="Libelle"   variant="standard" fullWidth className="my-4"/>
-                    <TextField name="descCateg" value={info.descCateg} onChange={onChangeHandler} label="Description" variant="standard" fullWidth className="my-4" />
-                </DialogContent>
-                <DialogActions>
-                    <Button variant="text" color="secondary" onClick={handleOpen}>Annuler</Button>
-                    <Button variant="text" color="primary" onClick={onSubmit}>Sauvegarder</Button>
-                </DialogActions>
+                <form method="POST" onSubmit={onSubmit}>
+                    <DialogContent>
+                        <TextField name="libelleCateg" value={info.libelleCateg} onChange={onChangeHandler}  label="Libelle" required   variant="standard" fullWidth className="my-4"/>
+                        <TextField name="descCateg" value={info.descCateg} onChange={onChangeHandler} label="Description" required variant="standard" fullWidth className="my-4" />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button variant="text" color="secondary" onClick={handleOpen}>Annuler</Button>
+                        <Button variant="text" color="primary" type="submit">Sauvegarder</Button>
+                    </DialogActions>
+                </form>
              </Dialog>
         </>
     )

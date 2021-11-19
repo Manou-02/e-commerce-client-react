@@ -71,71 +71,76 @@ const CreateProduit = () => {
 
     return (
         <>
-            <div className="container m-4">
+            <div className="container my-4">
             <Grid container>
                 <Grid item xs={6} sm={3} >
 
                 </Grid>
                 <Grid item xs={12} sm={6} >
-                    <Typography className="m-4">Nouveau produit</Typography>
-                    <form>
-                    <input type="file" name="images" onChange={onChangeImage} className="m-4" multiple />
-                    <TextField 
-                            id="nomProd"
-                            name="nomProd"
-                            label="Nom"
-                            fullWidth
-                            margin="dense"
-                            variant="outlined"
-                            type="text"
-                            onChange={handleChange}
-                        />
+                    <Typography className="m-4" variant="h5">Nouveau produit</Typography>
+                    <form method="POST" onSubmit={handleOnSubmit}>
+                        <label>Images</label><br />
+                        <input type="file" name="images" onChange={onChangeImage} className="my-4" multiple />
                         <TextField 
-                            id="descProd"
-                            name="descProd"
-                            label="Description"
-                            multiline
-                            rows={6}
-                            fullWidth
-                            margin="dense"
-                            variant="outlined"
-                            type="text"
-                            onChange={handleChange}
-                        />
-                        <TextField 
-                            id="prixProd"
-                            name="prixProd"
-                            label="Prix(Ar)"
-                            margin="dense"
-                            variant="outlined"
-                            type="number"
-                            className="mb-4"
-                            onChange={handleChange}
-                        />&nbsp;&nbsp;
-                        <TextField 
-                            id="rateProd"
-                            name="rateProd"
-                            label="Rate"
-                            margin="dense"
-                            variant="outlined"
-                            type="number"
-                            className="mb-4"
-                            onChange={handleChange}
-                        /><br />
-                        <FormControl variant="outlined" className="mb-4" fullWidth>
-                            <InputLabel>Categorie</InputLabel>
-                            <Select label="Categorie" name="category" onChange={handleChange}>
-                                {categories.length !== undefined && categories.map(categorie => (
-                                    <MenuItem value={categorie._id}>
-                                        {categorie.libelleCateg}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <br />
-                        <Button color="primary" variant="contained" type="submit" fullWidth onClick={handleOnSubmit}> <AddCircle />&nbsp;&nbsp; 
-                            Publier
-                        </Button>
+                                id="nomProd"
+                                name="nomProd"
+                                label="Nom"
+                                fullWidth
+                                margin="dense"
+                                variant="outlined"
+                                type="text"
+                                required
+                                onChange={handleChange}
+                            />
+                            <TextField 
+                                id="descProd"
+                                name="descProd"
+                                label="Description"
+                                multiline
+                                rows={6}
+                                fullWidth
+                                margin="dense"
+                                variant="outlined"
+                                type="text"
+                                required
+                                onChange={handleChange}
+                            />
+                            <TextField 
+                                id="prixProd"
+                                name="prixProd"
+                                label="Prix(Ar)"
+                                margin="dense"
+                                variant="outlined"
+                                type="number"
+                                className="mb-4"
+                                required
+                                onChange={handleChange}
+                            />&nbsp;&nbsp;
+                            <TextField 
+                                id="rateProd"
+                                name="rateProd"
+                                label="Rate"
+                                margin="dense"
+                                variant="outlined"
+                                type="number"
+                                required
+                                className="mb-4"
+                                onChange={handleChange}
+                            /><br />
+                            <FormControl variant="outlined" className="mb-4" fullWidth>
+                                <InputLabel>Categorie</InputLabel>
+                                <Select label="Categorie" name="category" required onChange={handleChange}>
+                                    {categories.length !== undefined && categories.map(categorie => (
+                                        <MenuItem value={categorie._id}>
+                                            {categorie.libelleCateg}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            <br />
+                            <Button color="primary" variant="contained" type="submit" fullWidth> <AddCircle />&nbsp;&nbsp; 
+                                Publier
+                            </Button>
                     </form>
                                           
                 </Grid>

@@ -11,6 +11,7 @@ import Panier from './components/public/Panier/Panier';
 import Commande from './components/public/Commande/Commande';
 import CommandeEnvoyer from './components/public/Commande/CommandeEnvoyer';
 import CommandeAdmin from './components/Administration/Commande';
+import User from './components/Administration/User';
 
 const App = () => {
     return (
@@ -29,6 +30,7 @@ const App = () => {
                     <Route path="/administration/produit" exact component={Produit} />
                     <Route path="/administration/produit/create"  component={CreateProduit} />
                     <Route path="/administration/commandes"  component={CommandeAdmin} />
+                    <Route path="/administration/users"  component={User} />
                 </Switch>            
             </Router>
         </div>

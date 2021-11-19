@@ -82,29 +82,32 @@ const Login = () => {
                                             {erreur && 
                                                 <Alert severity="error">{erreur} </Alert>
                                             }
-                                            <TextField 
-                                               label="E-mail"
-                                               id="emailUser"
-                                               name="emailUser"
-                                               type="email"
-                                               fullWidth
-                                               className="mb-4"
-                                               onChange={handleChange}
-                                            />
-                                            <TextField 
-                                               label="Mot de passe"
-                                               id="password"
-                                               name="password"
-                                               type="password"
-                                               fullWidth 
-                                               className="mb-4"
-                                               onChange={handleChange}
-                                            />
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
-                                
-                                            <Link to="/" className={classes.connexion} style={{textDecoration : 'none'}}>
-                                                <Button color="primary" variant="contained" className="my-4" onClick={onSubmit}><LockOpen />&nbsp;&nbsp;  Se connecter</Button>
-                                            </Link>
+                                            <form onSubmit={onSubmit} method="POST">
+                                                <TextField 
+                                                    label="E-mail"
+                                                    id="emailUser"
+                                                    name="emailUser"
+                                                    type="email"
+                                                    fullWidth
+                                                    className="mb-4"
+                                                    required
+                                                    onChange={handleChange}
+                                                />
+                                                <TextField 
+                                                    label="Mot de passe"
+                                                    id="password"
+                                                    name="password"
+                                                    type="password"
+                                                    fullWidth
+                                                    required 
+                                                    className="mb-4"
+                                                    onChange={handleChange}
+                                                />
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <Button color="primary" variant="contained" className="my-4" type="submit"><LockOpen />&nbsp;&nbsp;  Se connecter</Button>
+                                                
+                                            </form>
+                                            
                                         </Grid>
                                     </Grid>
                                 </CardContent>

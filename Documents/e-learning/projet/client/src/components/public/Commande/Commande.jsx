@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addClient, getOneClient } from "../../../actions/ClientAction";
 import db from "../../../reducers/InitialeIDB";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper.scss';
@@ -37,7 +37,7 @@ const Commande = () => {
     const panier = useSelector(state => state.PanierReducers);
     const history = useHistory();
     const [total, setTotal] = useState();
-
+    const [valide, setValide] = useState(false);
 
     const openHandler = () => {
         setOpen(!open)
@@ -45,6 +45,7 @@ const Commande = () => {
 
     const handleChange = e => {
         const {name, value} = e.target
+
         setInfo(prev => ({
             ...prev,
             [name] : value
@@ -88,7 +89,7 @@ const Commande = () => {
         
     }
 
-    const validerCommande = () => {
+    const validerCommande = async () => {
        
         const commande = {
             client : data.client,
@@ -101,13 +102,12 @@ const Commande = () => {
 
         dispatch(createCommande(commande));
         history.push('/commande-envoyer');
-
     }
 
     useEffect(() => {
-        dispatch(getOneClient());
+        //  dispatch(getOneClient());
         calcul();
-    }, [data, panier])
+    }, [data])
 
     return (
         <>
@@ -137,6 +137,7 @@ const Commande = () => {
                                 </Grid>
                                 <Grid item xs={8} spacing={2}>
                                     <Typography className="my-4">Veuillez remplir les champs suivants pour proceder à votre commande.</Typography>
+                                    <form method="post" onSubmit={onSubmit}>
                                     <TextField 
                                         type="text"
                                         name="nomClient"
@@ -145,6 +146,7 @@ const Commande = () => {
                                         variant="standard"
                                         label="Nom"
                                         className="my-4"
+                                        required
                                         onChange={handleChange}
                                     />
                                     <TextField 
@@ -155,6 +157,7 @@ const Commande = () => {
                                         variant="standard"
                                         label="Prènom(s)"
                                         className="my-4"
+                                        required
                                         onChange={handleChange}
                                     />
                                     <TextField 
@@ -165,6 +168,7 @@ const Commande = () => {
                                         variant="standard"
                                         label="E-mail"
                                         className="my-4"
+                                        required
                                         onChange={handleChange}
                                     />
                                     <Typography className="mt-4">Adresse</Typography>
@@ -178,6 +182,7 @@ const Commande = () => {
                                                 margin="dense"
                                                 variant="standard"
                                                 label="Lot"
+                                                required
                                                 onChange={handleChange}
                                             />
                                         </Grid>
@@ -189,6 +194,7 @@ const Commande = () => {
                                                 margin="dense"
                                                 variant="standard"
                                                 label="Ville"
+                                                required
                                                 onChange={handleChange}
                                             />
                                             
@@ -198,6 +204,7 @@ const Commande = () => {
                                                 type="text"
                                                 name="provinceClient"
                                                 fullWidth
+                                                required
                                                 margin="dense"
                                                 variant="standard"
                                                 label="Province"
@@ -206,8 +213,12 @@ const Commande = () => {
                                             
                                         </Grid>
                                     </Grid>
-                                    <Button variant="contained" onClick={onSubmit} className="mt-4" color="primary" fullwidth>Valider</Button>
+                                    <Button variant="contained" type="submit" className="mt-4" color="primary" fullwidth>Valider</Button>
+                                    </form>
+                                   
                                 </Grid>
+                                
+                                
                                 <Grid item xs={2} className="m-4">
 
                                 </Grid>
@@ -271,6 +282,24 @@ const Commande = () => {
                             </Paper>
                         ))}
 
+                        <div className="container">
+                            <Typography variant="h6"><em> Total : {total} Ar</em></Typography>
+                        </div>
+                        <div className="container mt-4">
+                            <Typography variant="subtitle1">Mode de payement :</Typography>
+                            <div className="m-4">
+                                <input type="radio" id="huey" name="drone" value="huey" checked />
+                                <label for="huey">&nbsp; Mobile money</label>
+                            </div>
+                            <div className="m-4">
+                                <input type="radio" id="huey" name="drone" value="huey" />
+                                <label for="huey">&nbsp; Carte crédit</label>
+                            </div>
+                            <div className="m-4">
+                                <input type="radio" id="huey" name="drone" value="huey" />
+                                <label for="huey">&nbsp; Autres</label>
+                            </div>
+                        </div>   
                     </DialogContent>
                     <DialogActions>
                         <Button color="secondary" onClick={openHandler}>Annuler</Button>
